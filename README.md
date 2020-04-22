@@ -52,9 +52,9 @@ request 对象用于接收API网关的入参。包含以下参数：
 
 以下参数不建议使用，可用于调试：
 
-|  参数名  | 数据类型 |                含义说明                 | 示例 |
-| :------: | :------: | :-------------------------------------: | :--: |
-| protocol |  object  | 由API网关传入，未做任何处理的原始请求头 |      |
+|   参数名   | 数据类型 |                含义说明                 | 示例 |
+| :--------: | :------: | :-------------------------------------: | :--: |
+| rawHeaders |  object  | 由API网关传入，未做任何处理的原始请求头 |      |
 
 
 
@@ -167,9 +167,9 @@ response.statusMessage = 'ok'
 |    参数名     |  别名   |
 | :-----------: | :-----: |
 |  statusCode   | header  |
-| statusMessage | message |
+| statusMessage | message, statusText |
 |    setData    | setBody |
-|     body      |  body   |
+|     body      |  data  |
 |     send      |  end   |
 
 
