@@ -1,0 +1,21 @@
+{
+    "name": "apinit",
+    "version": "0.0.1",
+    "description": "An easy and useful toolkit for Serverless at API event.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "Serverless",
+        "request",
+        "response",
+        "aliyun",
+        "toolkit"
+    ],
+    "author": {
+        "name": "Lai Yiming",
+        "email": "inlym@qq.com"
+    },
+    "license": "MIT"
+}

@@ -1,5 +1,13 @@
-# foi
-一款实用的处理Serverless架构API网关触发器的工具，让你轻松处理请求和发送响应，可跨平台使用。
+#  foi 
+基于Serverless架构API网关触发器Web开发框架，让你轻松处理请求和发送响应，可跨平台使用。
+
+
+
+
+
+## 简介
+
+**foi** 是一款小巧易用的基于Serverless架构API网关触发器的Web开发框架，通过使用 **foi** ，你可以更优雅地开发Serverless应用。虽然各个云计算平台（例如阿里云、腾讯云等）对Serverless都有不同的实现，体现在各入口参数的不同，你不必因此担心，**foi** 将帮助你抹平各云计算平台FaaS服务之间的差异，让你的一套代码，可以到处运行。
 
 
 
@@ -9,7 +17,7 @@
 
 * 完美支持Serverless服务的API网关触发器的相关事件，简单易用
 
-* 相比原生写法，使用foi后，能够大大减少开发工作量
+* 相比原生写法，使用 **foi** 后，能够大大减少开发工作量
 
 * 兼容从Koa框架迁移Serverless服务，只需要改动几行代码就可以适配
 
@@ -20,7 +28,7 @@
 
  ## 支持平台
 
-目前appio已支持以下云计算平台的Serverless服务：
+目前 **foi** 已支持以下云计算平台的Serverless服务：
 
 |   云平台   |  服务名称  |        服务英文名         | 服务英文缩写 |                          地址                          | appio支持 |
 | :--------: | :--------: | :-----------------------: | :----------: | :----------------------------------------------------: | :-------: |
@@ -42,7 +50,7 @@
 npm install foi
 ```
 
-如果访问速度较慢，建议使用cnpm安装：
+如果访问速度较慢，建议使用cnpm安装：（如需查看cnpm的安装方式，请[点击](https://developer.aliyun.com/mirror/NPM) ）
 
 ```shell
 cnpm install foi
@@ -59,7 +67,7 @@ cnpm install foi
 使用前，首先进行引用：
 
 ```javascript
-const foi = require('foi')
+const Foi = require('foi')
 ```
 
 
@@ -68,23 +76,23 @@ const foi = require('foi')
 
 #### 方式一（推荐）
 
-直接使用解构语法获取 request 和 response 对象：
+直接使用解构语法获取 **request** 和 **response** 对象：
 
 ```js
-const { request, response } = new foi(event, context, callback)
+const { request, response } = new Foi(event, context, callback)
 ```
 
 同时也支持以下别名方式（建议使用别名，更简短）：
 
 ```js
-const { req, res } = new foi(event, context, callback)
+const { req, res } = new Foi(event, context, callback)
 ```
 
 
 
 #### 方式二
 
-直接获取app对象，以属性的方式使用 request 和 response 对象：
+直接获取 **app** 对象，以属性的方式使用 **request** 和 **response** 对象：
 
 ```javascript
 const app = new foi(event, context, callback)
@@ -92,7 +100,7 @@ app.request    // request对象
 app.response   // response对象
 ```
 
-同理，方式二也支持 req 和 res 别名。
+同理，方式二也支持 **req** 和 **res** 别名。
 
 ```javascript
 const app = new foi(event, context, callback)
@@ -104,7 +112,7 @@ app.res    // response对象
 
 ### 使用方式
 
-你可以像使用普通对象那样使用 request 对象和 response 对象，例如可以使用 request.method 获取请求方法，使用 response.body='abc' 设置响应主体，等等。最终使用 response.send() 发送响应。
+你可以像使用普通对象那样使用 **request** 对象和 **response** 对象，例如可以使用 *request.method* 获取请求方法，使用 *response.body='abc'* 设置响应主体，等等。最终使用 *response.send()* 发送响应。
 
 ```javascript
 request.method         // 获取请求方法
@@ -122,14 +130,16 @@ response.send()        // 发送响应
 
 ### 属性
 
-request 对象用于接收API网关的入参。包含以下参数：
+ **request** 对象用于接收API网关的入参。包含以下参数：
 
 |   参数名    | 数据类型 |       含义说明        |                             示例                             |
 | :---------: | :------: | :-------------------: | :----------------------------------------------------------: |
 |   method    |  string  |       请求方法        |                            'GET'                             |
-|   headers   |  object  |        请求头[^headers]         | {"user-agent":"Mozilla/5.0","accept-language":"zh-CN,zh;q=0.9,en;q=0.8,ja;q=0.7"} |
-|     url     |  string  |        请求url[^url]        |                 '/path/to?name=mark&age=19'                  |
-|    path     |  string  |       请求路径[^path]        |                          '/path/to'                          |
+|   headers   |  object  |        请求头         | {"user-agent":"Mozilla/5.0","accept-language":"zh-CN,zh;q=0.9,en;q=0.8,ja;q=0.7"} |
+|  protocol   |  string  |       HTTP协议        |                            'HTTP'                            |
+|    host     |  string  |       请求域名        |                       'api.inlym.com'                        |
+|     url     |  string  |        请求url        |                 '/path/to?name=mark&age=19'                  |
+|    path     |  string  |       请求路径        |                          '/path/to'                          |
 | pathParams  |  object  |     请求路径参数      |                       {"post_id":123}                        |
 |    query    |  object  |     请求查询对象      |                   {"name":"mark","age":19}                   |
 | querystring |  string  |    请求查询字符串     |                      'name=mark&age=19'                      |
@@ -137,22 +147,23 @@ request 对象用于接收API网关的入参。包含以下参数：
 |     ip      |  string  |  请求客户端的IP地址   |                          '1.2.3.4'                           |
 |     id      |  string  | 请求id，由API网关提供 |            'FDB8CDF8-8DD8-425E-8944-FD9A675B9E0E'            |
 
-
-[^headers]:为保证兼容性，所有的header头将转换成小写字符。
-[^url]: 严格来讲，这里的url实际上应是path，为保持兼容性，因此使用url来表示。
-[^path]: 严格来讲，这里的path实际上应是pathname，为保持兼容性，因此使用path来表示。
-
-
+备注：
+* 为正常使用，以下参数需要在API网关设置，设置方式见下述 使用须知：
+	1. protocol
+	2. host
+	3. ip
+* query、pathParams等参数按需设置透传或映射。
+* 为保证兼容性，所有的header头将转换成小写字符。
+* 严格来讲，这里的url实际上应是path，为保持兼容性，因此使用url来表示。
+* 严格来讲，这里的path实际上应是pathname，为保持兼容性，因此使用path来表示。
 
 
 
 以下属性不常用，但也提供了支持：
 
-|  参数名  | 数据类型 |                含义说明                |          示例          |
-| :------: | :------: | :------------------------------------: | :--------------------: |
-| protocol |  string  |           协议，http或https            |         'http'         |
-| rawBody  |  buffer  | buffer形式的请求主体，常用于图片类请求 | Buffer(3) [97, 98, 99] |
-|          |          |                                        |                        |
+| 参数名  | 数据类型 |                含义说明                |          示例          |
+| :-----: | :------: | :------------------------------------: | :--------------------: |
+| rawBody |  buffer  | buffer形式的请求主体，常用于图片类请求 | Buffer(3) [97, 98, 99] |
 
 
 
@@ -166,7 +177,31 @@ request 对象用于接收API网关的入参。包含以下参数：
 
 ### 方法
 
+#### req.getHeader(field)
 
+获取请求头字段field（不区分大小写）
+
+```javascript
+req.getHeader('Content-Type')    // 'image/png'
+```
+
+
+
+#### req.setHeader(field, value)
+
+设置请求头字段field的值为value
+
+```javascript
+req.setHeader('Content-Type') = 'image/png'
+```
+
+
+
+#### req.removeHeader(field)
+移除请求头字段field
+```javascript
+req.removeHeader('Content-Type')
+```
 
 
 
@@ -179,10 +214,10 @@ request 对象用于接收API网关的入参。包含以下参数：
 |   参数名   |                         别名                         |
 | :--------: | :--------------------------------------------------: |
 |  headers   |                        header                        |
-|    body    |                       bodydata                       |
+|    body    |                         data                         |
 |  rawBody   |                       rawData                        |
 |   query    | queries, param, params, queryParams, queryParameters |
-|     ip     |                       clientIp                       |
+|     ip     |                 clientIp, client_ip                  |
 |    path    |                       pathname                       |
 | pathParams |                    pathParameters                    |
 
@@ -190,11 +225,11 @@ request 对象用于接收API网关的入参。包含以下参数：
 
 方法别名：
 
-| 参数名 | 别名 |
-| :----: | :--: |
-|        |      |
-|        |      |
-|        |      |
+|    参数名    |  别名  |
+| :----------: | :----: |
+|  getHeader   |  get   |
+|  setHeader   |  set   |
+| removeHeader | remove |
 
 
 
@@ -205,6 +240,10 @@ request 对象用于接收API网关的入参。包含以下参数：
 ### 属性
 
 ### 方法
+
+
+
+
 
 #### 设置响应状态码
 
@@ -284,7 +323,7 @@ response.statusMessage = 'ok'
 
 
 
-## API网关配置
+## 使用须知
 
 ### 阿里云
 
