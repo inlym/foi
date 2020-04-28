@@ -1,17 +1,17 @@
 #  foi 
 基于Serverless架构API网关触发器Web开发框架，让你轻松处理请求和发送响应，可跨平台使用。
 
+ 
 
-
-
+ 
 
 ## 简介
 
 **foi** 是一款小巧易用的基于Serverless架构API网关触发器的Web开发框架，通过使用 **foi** ，你可以更优雅地开发Serverless应用。虽然各个云计算平台（例如阿里云、腾讯云等）对Serverless都有不同的实现，体现在各入口参数的不同，你不必因此担心，**foi** 将帮助你抹平各云计算平台FaaS服务之间的差异，让你的一套代码，可以到处运行。
 
+ 
 
-
-
+ 
 
 ## 优点
 
@@ -21,30 +21,30 @@
 
 * 兼容从Koa框架迁移Serverless服务，只需要改动几行代码就可以适配
 
+ 
 
-
-
+ 
 
 
  ## 支持平台
 
 目前 **foi** 已支持以下云计算平台的Serverless服务：
 
-|   云平台   |  服务名称  |        服务英文名         | 服务英文缩写 |                          地址                          | appio支持 |
-| :--------: | :--------: | :-----------------------: | :----------: | :----------------------------------------------------: | :-------: |
-|   阿里云   |  函数计算  |     Function Compute      |      FC      |           https://www.aliyun.com/product/fc            |  已支持   |
-|   腾讯云   |   云函数   | Serverless Cloud Function |     SCF      |         https://cloud.tencent.com/product/scf          |  开发中   |
-|   华为云   | 函数工作流 |      Function Graph       |      FG      | https://www.huaweicloud.com/product/functiongraph.html |  开发中   |
-| 百度智能云 |  函数计算  |  Cloud Function Compute   |     CFC      |        https://cloud.baidu.com/product/cfc.html        |  开发中   |
-|    AWS     |   Lambda   |          Lambda           |      AL      |            https://aws.amazon.com/cn/lambda            |  开发中   |
+|   云平台   |  服务名称  |        服务英文名         | 服务英文缩写 |                        服务地址                        | foi支持情况 |
+| :--------: | :--------: | :-----------------------: | :----------: | :----------------------------------------------------: | :---------: |
+|   阿里云   |  函数计算  |     Function Compute      |      FC      |           https://www.aliyun.com/product/fc            |   已支持    |
+|   腾讯云   |   云函数   | Serverless Cloud Function |     SCF      |         https://cloud.tencent.com/product/scf          |   开发中    |
+|   华为云   | 函数工作流 |      Function Graph       |      FG      | https://www.huaweicloud.com/product/functiongraph.html |   开发中    |
+| 百度智能云 |  函数计算  |  Cloud Function Compute   |     CFC      |        https://cloud.baidu.com/product/cfc.html        |   开发中    |
+|    AWS     |   Lambda   |          Lambda           |      AL      |            https://aws.amazon.com/cn/lambda            |   开发中    |
 
+ 
 
-
-
+ 
 
 ## 安装
 
-使用npm安装：
+**foi** 的安装非常简单，你可以直接使用npm安装：
 
 ```shell
 npm install foi
@@ -56,9 +56,9 @@ npm install foi
 cnpm install foi
 ```
 
+ 
 
-
-
+ 
 
 ## 使用
 
@@ -70,7 +70,7 @@ cnpm install foi
 const Foi = require('foi')
 ```
 
-
+ 
 
 ### 初始化
 
@@ -88,7 +88,7 @@ const { request, response } = new Foi(event, context, callback)
 const { req, res } = new Foi(event, context, callback)
 ```
 
-
+ 
 
 #### 方式二
 
@@ -108,11 +108,11 @@ app.req    // request对象
 app.res    // response对象
 ```
 
-
+ 
 
 ### 使用方式
 
-你可以像使用普通对象那样使用 **request** 对象和 **response** 对象，例如可以使用 *request.method* 获取请求方法，使用 *response.body='abc'* 设置响应主体，等等。最终使用 *response.send()* 发送响应。
+你可以像使用普通对象那样使用 **request** 对象和 **response** 对象，使用它的属性和方法，例如可以使用 *request.method* 获取请求方法，使用 *response.body='abc'* 设置响应主体，等等。最终使用 *response.send()* 发送响应。
 
 ```javascript
 request.method         // 获取请求方法
@@ -122,9 +122,9 @@ response.send()        // 发送响应
 
 完整的属性和方法请查看以下的请求对象（request）和响应对象（response）。
 
+ 
 
-
-
+ 
 
 ## 请求对象（request）
 
@@ -157,7 +157,7 @@ response.send()        // 发送响应
 * 严格来讲，这里的url实际上应是path，为保持兼容性，因此使用url来表示。
 * 严格来讲，这里的path实际上应是pathname，为保持兼容性，因此使用path来表示。
 
-
+ 
 
 以下属性不常用，但也提供了支持：
 
@@ -173,7 +173,7 @@ response.send()        // 发送响应
 | :--------: | :------: | :-------------------------------------: | :----------------------------------------------------------: |
 | rawHeaders |  object  | 由API网关传入，未做任何处理的原始请求头 | {"User-Agent":"Mozilla/5.0","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,ja;q=0.7"} |
 
-
+ 
 
 ### 方法
 
@@ -185,7 +185,7 @@ response.send()        // 发送响应
 req.getHeader('Content-Type')    // 'image/png'
 ```
 
-
+  
 
 #### req.setHeader(field, value)
 
@@ -195,7 +195,7 @@ req.getHeader('Content-Type')    // 'image/png'
 req.setHeader('Content-Type') = 'image/png'
 ```
 
-
+ 
 
 #### req.removeHeader(field)
 移除请求头字段field
@@ -203,7 +203,7 @@ req.setHeader('Content-Type') = 'image/png'
 req.removeHeader('Content-Type')
 ```
 
-
+ 
 
 ### 别名支持
 
@@ -221,7 +221,7 @@ req.removeHeader('Content-Type')
 |    path    |                       pathname                       |
 | pathParams |                    pathParameters                    |
 
-
+ 
 
 方法别名：
 
@@ -239,105 +239,105 @@ req.removeHeader('Content-Type')
 
 ### 属性
 
+**response** 的包含以下属性：
+
+|     参数名      | 数据类型 |     含义说明     |                     示例                     |
+| :-------------: | :------: | :--------------: | :------------------------------------------: |
+|   statusCode    |  number  |     请求方法     |                     200                      |
+|  statusMessage  |  string  |     状态消息     |                     'OK'                     |
+|     headers     |  object  |      响应头      | {"content-type": "application/octet-stream"} |
+|      body       |   any    |     请求主体     |                    'abc'                     |
+| isBase64Encoded | boolean  | 是否被base64编码 |                    false                     |
+
+ 
+
 ### 方法
 
+> 注意：以下所列举方法均可对属性直接赋值来设置，当前版本两种使用方式无任何区别，但为了后续版本的拓展性，建议使用以下方法进行设置。
 
+#### res.getHeader(field)
 
+获取响应头字段field（不区分大小写）
 
-
-#### 设置响应状态码
-
-可以通过以下2种方式设置响应的状态码，如果您未指定状态码，将默认设定为 200 。
-
-
-
-方式一：使用 setCode 方法设置响应的状态码（推荐）
-
-```js
-response.setCode(200)
+```javascript
+res.getHeader('Content-Type')    // 'image/png'
 ```
 
+  
 
+#### res.setHeader(field, value)
 
-方式二：直接对 statusCode 赋值设置响应的状态码
+设置响应头字段field的值为value
 
-```js
-response.statusCode = 200
+```javascript
+res.setHeader('Content-Type') = 'image/png'
 ```
 
+ 
 
+#### res.removeHeader(field)
 
-#### 设置响应状态消息
+移除响应头字段field
 
-可以通过以下2种方式设置响应的状态消息，如果您未指定状态消息，将自动按照HTTP协议规范自动填充。
-
-
-
-方式一：使用 setMessage 方法设置响应的状态消息（推荐）
-
-```js
-response.setMessage('ok')
+```javascript
+res.removeHeader('Content-Type')
 ```
 
+  
 
+#### res.setCode(code)
 
-方式二：直接对 statusMessage 赋值设置响应的状态消息
+设置响应状态码
 
-```js
-response.statusMessage = 'ok'
+```javascript
+res.setCode(200)
 ```
 
+  
 
+#### res.setMessage(msg)
 
-#### 设置响应头
+设置响应状态消息
+```javascript
+res.setMessage('OK')
+```
 
+  
 
+#### res.setBody(body)
 
+设置响应body
 
+```javascript
+res.setBody('abc')
+```
 
-#### 设置响应body
+  
 
+#### res.send(data)
 
+发送响应，若包含data，将替换body
 
+ ```javascript
+res.send()
+res.send('abc')
+ ```
 
+ 
 
-#### 发送响应
-
-使用 send 方法发送响应，------
-
-
+  
 
 ### 别名支持
 
 同样考虑到部分开发者的使用习惯，同时支持以下别名，使用别名和参数名具有完全一致的效果，您无须考虑使用别名引起的兼容性问题。
 
-
-
 |    参数名     |  别名   |
 | :-----------: | :-----: |
-|  statusCode   | header  |
+|  statusCode   | code, status |
 | statusMessage | message, statusText |
-|    setData    | setBody |
+| headers | header |
+|    setBody    | setData |
 |     body      |  data  |
 |     send      |  end   |
 
-
-
-## 使用须知
-
-### 阿里云
-
-
-
-
-
-## 使用演示
-
-
-
-
-
-
-
-## 版本历史
 

@@ -1,7 +1,7 @@
 {
-    "name": "apinit",
-    "version": "0.0.1",
-    "description": "An easy and useful toolkit for Serverless at API event.",
+    "name": "foi",
+    "version": "1.0.0",
+    "description": "基于Serverless架构API网关触发器Web开发框架，让你轻松处理请求和发送响应，可跨平台使用。",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"

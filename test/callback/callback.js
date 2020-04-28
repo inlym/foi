@@ -14,3 +14,5 @@ function callback(error, result) {
         console.log('----  result end  ----')
     }
 }
+
+module.exports = callback
