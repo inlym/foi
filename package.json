@@ -17,5 +17,8 @@
         "name": "Lai Yiming",
         "email": "inlym@qq.com"
     },
-    "license": "MIT"
+    "license": "MIT",
+    "dependencies": {
+        "debug": "^4.1.1"
+    }
 }
