@@ -1,343 +1,226 @@
-#  foi 
-基于Serverless架构API网关触发器Web开发框架，让你轻松处理请求和发送响应，可跨平台使用。
 
- 
 
- 
+# foi
+基于 Serverless 架构的 Node.js Web 开发框架，提供和 Koa 一致的 API，可跨云平台使用。
+
+
+> GitHub：[https://github.com/inlym/foi](https://github.com/inlym/foi)
+> 欢迎 star
+
+
 
 ## 简介
+foi 是一款基于 Serverless 架构的 Node.js Web 开发框架，提供和知名框架 Koa 一致的 API，可跨云平台使用。严格意义上来说，foi 并不是一个完整的框架，只是提供了一个方便开发 Serverless 应用的中间件。foi 主要做了以下两项工作：
 
-**foi** 是一款小巧易用的基于Serverless架构API网关触发器的Web开发框架，通过使用 **foi** ，你可以更优雅地开发Serverless应用。虽然各个云计算平台（例如阿里云、腾讯云等）对Serverless都有不同的实现，体现在各入口参数的不同，你不必因此担心，**foi** 将帮助你抹平各云计算平台FaaS服务之间的差异，让你的一套代码，可以到处运行。
+1. 统一对接各大云平台的 Serverless 实现
+1. 将封装好的 API 以 Koa 框架风格的 API 输出供开发者使用
 
- 
 
- 
+
+用以下的架构图表示 foi 的功能：
+![](https://img.inlym.com/6787f581fa804c24889ae31876ddd59f.jpg)
+
+
+
 
 ## 优点
-
-* 完美支持Serverless服务的API网关触发器的相关事件，简单易用
-
-* 相比原生写法，使用 **foi** 后，能够大大减少开发工作量
-
-* 兼容从Koa框架迁移Serverless服务，只需要改动几行代码就可以适配
-
- 
-
- 
+### 跨多云平台
+各云平台（阿里云、腾讯云、华为云、AWS等）对于 Serverless 的实现存在一定的差异，使用上也存在很大的差异，foi 针对各云平台的 API  做了兼容，使开发者在使用时无需阅读各云平台的开发文档，直接以 Koa 的 API 开发即可。foi 使得一份代码能够在所有云平台的 Serverless 架构服务上部署和运行。
 
 
- ## 支持平台
+### 低迁移成本
+从 Koa 框架迁移至 foi 框架，只需要更改 2 行代码即可使用。这里面 foi 框架做了大量的底层工作，兼容 Koa 的 API。（详情点击查看 从 Koa 迁移 foi ）
 
-目前 **foi** 已支持以下云计算平台的Serverless服务：
 
-|   云平台   |  服务名称  |        服务英文名         | 服务英文缩写 |                        服务地址                        | foi支持情况 |
-| :--------: | :--------: | :-----------------------: | :----------: | :----------------------------------------------------: | :---------: |
-|   阿里云   |  函数计算  |     Function Compute      |      FC      |           https://www.aliyun.com/product/fc            |   已支持    |
-|   腾讯云   |   云函数   | Serverless Cloud Function |     SCF      |         https://cloud.tencent.com/product/scf          |   开发中    |
-|   华为云   | 函数工作流 |      Function Graph       |      FG      | https://www.huaweicloud.com/product/functiongraph.html |   开发中    |
-| 百度智能云 |  函数计算  |  Cloud Function Compute   |     CFC      |        https://cloud.baidu.com/product/cfc.html        |   开发中    |
-|    AWS     |   Lambda   |          Lambda           |      AL      |            https://aws.amazon.com/cn/lambda            |   开发中    |
+另外，绝大多数的 Koa 中间件都可以在 foi 中使用。（由于 Serverless 架构限制，部分中间件无法使用。）
 
- 
 
- 
+### 低学习成本
+由于对开发者提供了与 Koa 一致的 API，因此开发无需额外花费时间学习 foi 本身，只需要根据文档说明对 foi 进行安装和使用即可，与 Koa 的差异仅在于初始化的 2 行代码。
+
+
+
+
+
 
 ## 安装
-
-**foi** 的安装非常简单，你可以直接使用npm安装：
-
-```shell
+foi 的安装非常简单，你可以直接使用 npm 进行安装：
+```bash
 npm install foi
 ```
 
-如果访问速度较慢，建议使用cnpm安装：（如需查看cnpm的安装方式，请[点击](https://developer.aliyun.com/mirror/NPM) ）
 
-```shell
+如果访问速度较慢，建议使用 cnpm 安装：（如需查看 cnpm 的安装方式，请 点击 ）
+```bash
 cnpm install foi
 ```
 
- 
 
- 
+
 
 ## 使用
+### hello world
+以下是一个输出响应（response）的主体为 'hello world' 的典型使用方式：
+```javascript
+'use strict'
+const Foi = require('foi')
 
-### 引用
+// Serverless 架构结构体
+module.exports.handler = function(event, context, callback){
+  // 初始化 app
+	const app = new Foi({event, context, callback})
+  
+  // 主体部分使用 app.use, 和 Koa 一致的 API
+  app.use(ctx=>{
+  	ctx.body = 'hello world'
+  })
+  
+  // 假的 listen, 兼容 Koa, 建议使用 app.init()
+  app.listen()
+}
+```
 
-使用前，首先进行引用：
 
+你可以看出，在使用上，和 Koa 几乎没有任何区分，Koa 中在 app.use( ) 中使用的代码，均能在 foi 中运行。
+
+### 初始化选项
+
+初始化的标准格式是：
+```javascript
+const app = new Foi(options)    // options 是一个对象
+```
+
+
+针对不同的云平台和触发器，对应的 options 参数略有不同，其中包含了一些公共参数，和一些触发器的私有参数。
+
+
+#### 公共参数
+```javascript
+const options = {
+	slient: false,    // 是否禁止打印 foi 框架日志，默认 false，可选
+  trigger: 'aliyun-apigw',    // 触发器，阿里云API网关触发器为'aliyun-apigw'
+}
+```
+
+
+#### 阿里云 - API网关
+```javascript
+const options = {
+	evnet: event,
+  context: context,
+  callback: callback,    // Serverless 传入的三要素，注意这里的属性值要和定义的变量名一致
+}
+```
+
+
+
+## 配置
+
+由于框架限制，部分参数需要在云平台进行配置才可以获取到。请按照你使用的触发器进行配置。
+
+
+#### 阿里云 - API网关
+（1）路径参数 - params
+通过以下方式配置后，你可以使用 ctx.params 获取路径参数对象
+![](https://img.inlym.com/7e8dc3657385440599f2cd384d232d29.jpg)
+
+（2）其他参数 - ip, host, protocol
+要获取 ip, host, protocol 参数，请在API网关处进行如下配置，否则会获取不到对应参数。
+![](https://img.inlym.com/560a1831f2274b019ae96a3022f9ad36.jpg)
+
+
+
+
+## 从 Koa 迁移 foi
+### 迁移方式
+从以上的使用方式看出，最核心的 app.use( ) 不需要改动。我们先来看一个最普通的 Koa 框架应用：
+```javascript
+'use strict'
+
+const Koa = require('koa')
+
+const app = new Koa()
+
+app.use(ctx=>{
+	ctx.body = 'hello world'
+})
+
+app.listen(80)
+```
+只要改动2处，就可以迁移至 foi ：
+（1）变更引用模块
+```javascript
+const Koa = require('koa')
+```
+变更为
 ```javascript
 const Foi = require('foi')
 ```
 
- 
 
-### 初始化
-
-#### 方式一（推荐）
-
-直接使用解构语法获取 **request** 和 **response** 对象：
-
-```js
-const { request, response } = new Foi(event, context, callback)
-```
-
-同时也支持以下别名方式（建议使用别名，更简短）：
-
-```js
-const { req, res } = new Foi(event, context, callback)
-```
-
- 
-
-#### 方式二
-
-直接获取 **app** 对象，以属性的方式使用 **request** 和 **response** 对象：
-
+（2）变更初始化方式
 ```javascript
-const app = new foi(event, context, callback)
-app.request    // request对象
-app.response   // response对象
+const app = new Koa()
 ```
-
-同理，方式二也支持 **req** 和 **res** 别名。
-
+变更为
 ```javascript
-const app = new foi(event, context, callback)
-app.req    // request对象
-app.res    // response对象
+	const app = new Foi({event, context, callback})
 ```
 
- 
 
-### 使用方式
-
-你可以像使用普通对象那样使用 **request** 对象和 **response** 对象，使用它的属性和方法，例如可以使用 *request.method* 获取请求方法，使用 *response.body='abc'* 设置响应主体，等等。最终使用 *response.send()* 发送响应。
-
+总共只需改动以上 2 行代码，以下部分为 Serverless 附加的代码：
 ```javascript
-request.method         // 获取请求方法
-response.body='abc'    // 设置响应主体为abc
-response.send()        // 发送响应
+module.exports.handler = function(event, context, callback){
+
+}
 ```
 
-完整的属性和方法请查看以下的请求对象（request）和响应对象（response）。
 
- 
 
- 
 
-## 请求对象（request）
+### 中间件兼容情况
+foi 兼容 Koa 框架的绝大多数中间件，但以下2类中间件不支持：
 
-### 属性
 
- **request** 对象用于接收API网关的入参。包含以下参数：
+1. 中间件承载的功能已经封装在 foi 框架里面了，例如 koa-bodyparser 中间件，可以直接通过 ctx.request.body  获取 body 请求的 body 内容。
+1. 基于“流”的中间件，更准确地讲，foi 不支持基于 Koa 的 req 和 res 对象的绝大多数中间件。（在 foi 实现中，屏蔽的原生的 req 和 res，虽然仍然能够使用 req 和 res，但这只是作为 request 和 response 的别名）
 
-|   参数名    | 数据类型 |       含义说明        |                             示例                             |
-| :---------: | :------: | :-------------------: | :----------------------------------------------------------: |
-|   method    |  string  |       请求方法        |                            'GET'                             |
-|   headers   |  object  |        请求头         | {"user-agent":"Mozilla/5.0","accept-language":"zh-CN,zh;q=0.9,en;q=0.8,ja;q=0.7"} |
-|  protocol   |  string  |       HTTP协议        |                            'HTTP'                            |
-|    host     |  string  |       请求域名        |                       'api.inlym.com'                        |
-|     url     |  string  |        请求url        |                 '/path/to?name=mark&age=19'                  |
-|    path     |  string  |       请求路径        |                          '/path/to'                          |
-| pathParams  |  object  |     请求路径参数      |                       {"post_id":123}                        |
-|    query    |  object  |     请求查询对象      |                   {"name":"mark","age":19}                   |
-| querystring |  string  |    请求查询字符串     |                      'name=mark&age=19'                      |
-|    body     |  string  |       请求主体        |                            'abc'                             |
-|     ip      |  string  |  请求客户端的IP地址   |                          '1.2.3.4'                           |
-|     id      |  string  | 请求id，由API网关提供 |            'FDB8CDF8-8DD8-425E-8944-FD9A675B9E0E'            |
 
-备注：
-* 为正常使用，以下参数需要在API网关设置，设置方式见下述 使用须知：
-	1. protocol
-	2. host
-	3. ip
-* query、pathParams等参数按需设置透传或映射。
-* 为保证兼容性，所有的header头将转换成小写字符。
-* 严格来讲，这里的url实际上应是path，为保持兼容性，因此使用url来表示。
-* 严格来讲，这里的path实际上应是pathname，为保持兼容性，因此使用path来表示。
 
- 
+## 框架 foi 和 midway比较
+midway 是阿里云自研的 Node.js Web 开发框架，能够实现 foi 的所有功能。两者的差异非常大，举一个例子，如果说 foi 类比于 jQuery 的话，可以将 midway 类比为 Angular + Typescript + Webpack + Node.js + NPM。
 
-以下属性不常用，但也提供了支持：
 
-| 参数名  | 数据类型 |                含义说明                |          示例          |
-| :-----: | :------: | :------------------------------------: | :--------------------: |
-| rawBody |  buffer  | buffer形式的请求主体，常用于图片类请求 | Buffer(3) [97, 98, 99] |
+foi 仅作为一个非浸入式开发的工具库，而 midway 提供了用于 Serverless 开发的一整套工具链。
 
 
+以下是 foi 和 midway 的对比：
 
-以下属性不建议使用，可用于调试：
+|  | foi | midway |
+| :---: | :---: | :---: |
+| 统一对接各云平台接口 | 支持 | 支持 |
+| 提供和 Koa 一致的 API | 支持 | 支持 |
+| 学习成本 | 非常低 | 非常高 |
+| 自动化部署 | 不支持 | 支持 |
+| 开发工具链 | 无 | 丰富 |
 
-|   参数名   | 数据类型 |                含义说明                 |                             示例                             |
-| :--------: | :------: | :-------------------------------------: | :----------------------------------------------------------: |
-| rawHeaders |  object  | 由API网关传入，未做任何处理的原始请求头 | {"User-Agent":"Mozilla/5.0","Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,ja;q=0.7"} |
 
- 
 
-### 方法
+## 支持情况
+各云平台触发器的支持情况：
 
-#### req.getHeader(field)
+| 云平台 | 触发器 | 触发器名称 | 支持情况 |
+| :---: | :---: | :---: | :---: |
+| 阿里云 | API网关触发器 | aliyun-apigw | 已支持 |
+| 阿里云 | HTTP触发器 | aliyun-http | 开发中 |
+| 腾讯云 | API网关触发器 | qcloud-apigw | 开发中 |
+| 华为云 | API网关触发器 | huawei-apigw | 开发中 |
+| 百度智能云 | API网关触发器 | baidu-apigw | 开发中 |
+| AWS | API网关触发器 | aws-apigw | 开发中 |
 
-获取请求头字段field（不区分大小写）
 
-```javascript
-req.getHeader('Content-Type')    // 'image/png'
-```
 
-  
 
-#### req.setHeader(field, value)
 
-设置请求头字段field的值为value
-
-```javascript
-req.setHeader('Content-Type') = 'image/png'
-```
-
- 
-
-#### req.removeHeader(field)
-移除请求头字段field
-```javascript
-req.removeHeader('Content-Type')
-```
-
- 
-
-### 别名支持
-
-考虑到部分开发者的使用习惯，同时支持以下别名，使用别名和参数名具有完全一致的效果，您无须考虑使用别名引起的兼容性问题。
-
-属性别名：
-
-|   参数名   |                         别名                         |
-| :--------: | :--------------------------------------------------: |
-|  headers   |                        header                        |
-|    body    |                         data                         |
-|  rawBody   |                       rawData                        |
-|   query    | queries, param, params, queryParams, queryParameters |
-|     ip     |                 clientIp, client_ip                  |
-|    path    |                       pathname                       |
-| pathParams |                    pathParameters                    |
-
- 
-
-方法别名：
-
-|    参数名    |  别名  |
-| :----------: | :----: |
-|  getHeader   |  get   |
-|  setHeader   |  set   |
-| removeHeader | remove |
-
-
-
-
-
-## 响应对象（response）
-
-### 属性
-
-**response** 的包含以下属性：
-
-|     参数名      | 数据类型 |     含义说明     |                     示例                     |
-| :-------------: | :------: | :--------------: | :------------------------------------------: |
-|   statusCode    |  number  |     请求方法     |                     200                      |
-|  statusMessage  |  string  |     状态消息     |                     'OK'                     |
-|     headers     |  object  |      响应头      | {"content-type": "application/octet-stream"} |
-|      body       |   any    |     请求主体     |                    'abc'                     |
-| isBase64Encoded | boolean  | 是否被base64编码 |                    false                     |
-
- 
-
-### 方法
-
-> 注意：以下所列举方法均可对属性直接赋值来设置，当前版本两种使用方式无任何区别，但为了后续版本的拓展性，建议使用以下方法进行设置。
-
-#### res.getHeader(field)
-
-获取响应头字段field（不区分大小写）
-
-```javascript
-res.getHeader('Content-Type')    // 'image/png'
-```
-
-  
-
-#### res.setHeader(field, value)
-
-设置响应头字段field的值为value
-
-```javascript
-res.setHeader('Content-Type') = 'image/png'
-```
-
- 
-
-#### res.removeHeader(field)
-
-移除响应头字段field
-
-```javascript
-res.removeHeader('Content-Type')
-```
-
-  
-
-#### res.setCode(code)
-
-设置响应状态码
-
-```javascript
-res.setCode(200)
-```
-
-  
-
-#### res.setMessage(msg)
-
-设置响应状态消息
-```javascript
-res.setMessage('OK')
-```
-
-  
-
-#### res.setBody(body)
-
-设置响应body
-
-```javascript
-res.setBody('abc')
-```
-
-  
-
-#### res.send(data)
-
-发送响应，若包含data，将替换body
-
- ```javascript
-res.send()
-res.send('abc')
- ```
-
- 
-
-  
-
-### 别名支持
-
-同样考虑到部分开发者的使用习惯，同时支持以下别名，使用别名和参数名具有完全一致的效果，您无须考虑使用别名引起的兼容性问题。
-
-|    参数名     |  别名   |
-| :-----------: | :-----: |
-|  statusCode   | code, status |
-| statusMessage | message, statusText |
-| headers | header |
-|    setBody    | setData |
-|     body      |  data  |
-|     send      |  end   |
 
 
