@@ -1,7 +1,7 @@
 {
     "name": "foi",
-    "version": "1.0.0",
-    "description": "基于Serverless架构API网关触发器Web开发框架，让你轻松处理请求和发送响应，可跨平台使用。",
+    "version": "2.0.0",
+    "description": "基于 Serverless 架构的 Node.js Web 开发框架，提供和 Koa 一致的 API，可跨云平台使用。",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,7 +19,5 @@
     },
     "license": "MIT",
     "dependencies": {
-        "delegates": "^1.0.0",
-        "koa-compose": "^4.1.0"
     }
 }
