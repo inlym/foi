@@ -1,6 +1,6 @@
 {
     "name": "foi",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "description": "基于 Serverless 架构的 Node.js Web 开发框架，提供和 Koa 一致的 API，可跨云平台使用。",
     "main": "index.js",
     "scripts": {
