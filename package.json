@@ -18,6 +18,8 @@
         "email": "inlym@qq.com"
     },
     "license": "MIT",
-    "dependencies": {
+    "dependencies": {},
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com/"
     }
 }
