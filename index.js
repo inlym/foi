@@ -1,9 +1,10 @@
 'use strict'
 
 /**
- * 作者: inlym
- * 邮件: inlym@qq.com
- * QQ:81555665
+ * Author:    inlym
+ * Email:     inlym@qq.com
+ * Github:    https://github.com/inlym/foi
+ * QQ:        81555665
  */
 
 module.exports = require('./lib/foi')
