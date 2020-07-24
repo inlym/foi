@@ -1,10 +1,10 @@
 
-
 # foi
 基于 Serverless 架构的 Node.js Web 开发框架，提供和 Koa 一致的 API，可跨云平台使用。
 
 
 > GitHub：[https://github.com/inlym/foi](https://github.com/inlym/foi)
+
 > 欢迎 star
 
 
@@ -66,17 +66,17 @@ cnpm install foi
 const Foi = require('foi')
 
 // Serverless 架构结构体
-module.exports.handler = function(event, context, callback){
-  // 初始化 app
-	const app = new Foi({event, context, callback})
-  
-  // 主体部分使用 app.use, 和 Koa 一致的 API
-  app.use(ctx=>{
-  	ctx.body = 'hello world'
-  })
-  
-  // 假的 listen, 兼容 Koa, 建议使用 app.init()
-  app.listen()
+module.exports.handler = function (event, context, callback) {
+	// 初始化 app
+	const app = new Foi({ event, context, callback })
+
+	// 主体部分使用 app.use, 和 Koa 一致的 API
+	app.use(ctx => {
+		ctx.body = 'hello world'
+	})
+
+	// 假的 listen, 兼容 Koa, 建议使用 app.init()
+	app.listen()
 }
 ```
 
@@ -98,7 +98,7 @@ const app = new Foi(options)    // options 是一个对象
 ```javascript
 const options = {
 	slient: false,    // 是否禁止打印 foi 框架日志，默认 false，可选
-  trigger: 'aliyun-apigw',    // 触发器，阿里云API网关触发器为'aliyun-apigw'
+	trigger: 'aliyun-apigw',    // 触发器，阿里云API网关触发器为'aliyun-apigw'
 }
 ```
 
@@ -107,8 +107,8 @@ const options = {
 ```javascript
 const options = {
 	evnet: event,
-  context: context,
-  callback: callback,    // Serverless 传入的三要素，注意这里的属性值要和定义的变量名一致
+	context: context,
+	callback: callback,    // Serverless 传入的三要素，注意这里的属性值要和定义的变量名一致
 }
 ```
 
@@ -164,7 +164,7 @@ const app = new Koa()
 ```
 变更为
 ```javascript
-	const app = new Foi({event, context, callback})
+const app = new Foi({event, context, callback})
 ```
 
 
@@ -217,10 +217,4 @@ foi 仅作为一个非浸入式开发的工具库，而 midway 提供了用于 S
 | 华为云 | API网关触发器 | huawei-apigw | 开发中 |
 | 百度智能云 | API网关触发器 | baidu-apigw | 开发中 |
 | AWS | API网关触发器 | aws-apigw | 开发中 |
-
-
-
-
-
-
 

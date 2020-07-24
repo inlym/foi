@@ -1,25 +1,22 @@
 {
-    "name": "foi",
-    "version": "2.1.0",
-    "description": "基于 Serverless 架构的 Node.js Web 开发框架，提供和 Koa 一致的 API，可跨云平台使用。",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "keywords": [
-        "Serverless",
-        "request",
-        "response",
-        "aliyun",
-        "toolkit"
-    ],
-    "author": {
-        "name": "Lai Yiming",
-        "email": "inlym@qq.com"
-    },
-    "license": "MIT",
-    "dependencies": {},
-    "publishConfig": {
-        "registry": "https://npm.pkg.github.com/"
-    }
+	"name": "foi",
+	"version": "2.2.0",
+	"description": "基于 Serverless 架构的 Node.js Web 开发框架，提供和 Koa 一致的 API，可跨云平台使用。",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"Serverless",
+		"request",
+		"response",
+		"aliyun",
+		"toolkit"
+	],
+	"author": {
+		"name": "Lai Yiming",
+		"email": "inlym@qq.com"
+	},
+	"license": "MIT",
+	"dependencies": {}
 }
